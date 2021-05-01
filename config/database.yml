@@ -1,0 +1,19 @@
+default: &default
+  adapter: postgresql
+  encoding: unicode
+  host: localhost
+  username: postgres
+  password: wunlc241
+  pool: 5
+
+production:
+  <<: *default
+  database: tarea_2_integracion_production
+
+development:
+  <<: *default
+  database: tarea_2_integracion_development
+
+test:
+  <<: *default
+  database: tarea_2_integracion_test
