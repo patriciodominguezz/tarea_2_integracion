@@ -5,38 +5,46 @@ class ArtistsController < ApplicationController
 
   def index
     artists = Artist.all;
-    render json:artists, status: :ok
+    render json:artists, status: 200
   end
 
   def show 
     @identificador = params[:id]
     artist = Artist.find_by(id: @identificador)
-    render json:{
-      status: 'Artist id',
-      data: artist
-    }, status: :ok
+    if artist.nil?
+      head 404
+    else
+      render json:artist, status: 200
+    end
   end
 
   def show_albums
     @variable = params[:id]
-    album = Album.where(artist_id: @variable)
-    render json:{
-      status: 'Album',
-      data: album
-    }, status: :ok
+    artist = Artist.find_by(id: @variable)
+    if artist.nil?
+      head 404
+    else
+      album = Album.where(artist_id: @variable)
+      render json:album, status: 200
+    end
   end
 
   def show_tracks
     @identificador = params[:id]
-    album = Album.where(artist_id: @identificador)
-    tracks = []
-    (0.. album.length()-1).each do |i|
-      variable = Track.where(album_id: album[i]["id"])
-      (0.. variable.length()-1).each do |j|
-        tracks.append(variable[j])
+    artist = Artist.find_by(id: @identificador)
+    if artist.nil?
+      head 404
+    else
+      album = Album.where(artist_id: @identificador)
+      tracks = []
+      (0.. album.length()-1).each do |i|
+        variable = Track.where(album_id: album[i]["id"])
+        (0.. variable.length()-1).each do |j|
+          tracks.append(variable[j])
+        end
       end
+      render json:tracks, status: 200
     end
-    render json:tracks, status: :ok
 
   end
 

@@ -1,16 +1,17 @@
 class TracksController < ApplicationController
   def index
     tracks = Track.all;
-    render json:tracks, status: :ok
+    render json:tracks, status: 200
   end
 
   def show 
     @identificador = params[:id]
     track = Track.find_by(id: @identificador)
-    render json:{
-      status: 'Track id',
-      data: track
-    }, status: :ok
+    if track.nil?
+      head 404  
+    else
+    render json:track, status: 200
+    end
   end
 
   def destroy

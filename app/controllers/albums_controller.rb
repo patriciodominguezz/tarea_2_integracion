@@ -7,19 +7,23 @@ class AlbumsController < ApplicationController
   def show 
     @identificador = params[:id]
     album = Album.find_by(id: @identificador)
-    render json:{
-      status: 'Album id',
-      data: album
-    }, status: :ok
+    if album.nil?
+      head 404
+    else
+      render json:album, status: 200
+    end
+
   end
 
   def show_tracks
     @variable = params[:id]
+    album = Album.find_by(id: @variable)
+    if album.nil?
+      head 404
+    else
     track = Track.where(album_id: @variable)
-    render json:{
-      status: 'Tracks',
-      data: track
-    }, status: :ok
+    render json:track, status: 200
+    end
   end 
 
   def create
