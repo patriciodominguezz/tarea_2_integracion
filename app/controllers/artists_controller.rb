@@ -42,49 +42,63 @@ class ArtistsController < ApplicationController
 
   def create 
     @artist_params = params.permit(:name, :age)
-    string = @artist_params["name"].strip
-    @base = Base64.encode64(string).strip
-    @identificador = @base[0..21]
+    if @artist_params["name"].nil? or @artist_params["age"].nil? or !@artist_params["name"].is_a?(String) or !@artist_params["age"].is_a?(Integer)
+      head 400
 
-    @albums = "https://tarea-2-taller-integracion.herokuapp.com/artists/" + @identificador + "/albums"
-    @tracks = "https://tarea-2-taller-integracion.herokuapp.com/artists/" + @identificador + "/tracks"
-    @self = "https://tarea-2-taller-integracion.herokuapp.com/artists/" + @identificador
-    
-    artist = Artist.new(id: @identificador, name: @artist_params["name"], age: @artist_params["age"], albums: @albums, tracks: @tracks, self: @self)
-    if artist.save
-      render json:{
-        status: 'ARTISTA CREADO EXITOSAMENTE',
-        data: artist
-      }, status: :ok
     else
-      render json:{
-        status: 'ARTISTA No creado',
-        data: artist
-      }, status: :unprocessable_entity
+
+      string = @artist_params["name"]
+      @base = Base64.encode64(string).strip
+      @identificador = @base[0..21]
+
+      @albums = "https://tarea-2-taller-integracion.herokuapp.com/artists/" + @identificador + "/albums"
+      @tracks = "https://tarea-2-taller-integracion.herokuapp.com/artists/" + @identificador + "/tracks"
+      @self = "https://tarea-2-taller-integracion.herokuapp.com/artists/" + @identificador
+      
+      duplicado = Artist.find_by(id: @identificador)
+    
+      if duplicado.nil?
+        artist = Artist.new(id: @identificador, name: @artist_params["name"], age: @artist_params["age"], albums: @albums, tracks: @tracks, self: @self)
+        if artist.save
+          render json:artist, status: 201     #####listo
+        end
+      else
+        render json:duplicado, status: 409
+      end
     end
   end
 
   def create_album
     @album_params = params.permit(:id, :name, :genre)
-    string = @album_params["name"].strip
-    @base = Base64.encode64(string + ":" + @album_params["id"]).strip
-    @identificador = @base[0..21]
-
-    @artist = "https://tarea-2-taller-integracion.herokuapp.com/artists/" + @album_params["id"]
-    @tracks = "https://tarea-2-taller-integracion.herokuapp.com/albums/" + @identificador + "/tracks"
-    @self = "https://tarea-2-taller-integracion.herokuapp.com/albums/" + @identificador
-
-    album = Album.new(id: @identificador, artist_id:  @album_params["id"], name: @album_params["name"], genre: @album_params["genre"], artist: @artist, tracks: @tracks, self: @self)
-    if album.save
-      render json:{
-        status: 'Albums CREADO EXITOSAMENTE',
-        data: album
-      }, status: :ok
+    @artist_exist = Artist.find_by(id: @album_params["id"])
+    if @artist_exist.nil?
+      head 422
     else
-      render json:{
-        status: 'Album No creado',
-        data: album
-      }, status: :unprocessable_entity
+      if @album_params["name"].nil? or @album_params["genre"].nil? or !@album_params["genre"].is_a?(String) or !@album_params["name"].is_a?(String)
+        head 400
+      else
+        string = @album_params["name"]
+        @base = Base64.encode64(string + ":" + @album_params["id"]).strip
+        @identificador = @base[0..21]
+
+        @artist = "https://tarea-2-taller-integracion.herokuapp.com/artists/" + @album_params["id"]
+        @tracks = "https://tarea-2-taller-integracion.herokuapp.com/albums/" + @identificador + "/tracks"
+        @self = "https://tarea-2-taller-integracion.herokuapp.com/albums/" + @identificador
+
+        duplicado = Album.find_by(id: @identificador)
+
+        if duplicado.nil?
+          album = Album.new(id: @identificador, artist_id:  @album_params["id"], name: @album_params["name"], genre: @album_params["genre"], artist: @artist, tracks: @tracks, self: @self)
+          if album.save
+            render json:album, status: 201     
+          end
+        else
+          render json:duplicado, status: 409
+
+        end
+
+      end
+
     end
 
   end
