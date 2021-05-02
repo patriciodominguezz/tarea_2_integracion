@@ -1,12 +1,12 @@
-Artist.create({
-    id: "TWljaGFlbCBKYWNrc29u",
-    name: "Michael Jackson",
-    age: 21,
-    albums: "https://apihost.com/artists/TWljaGFlbCBKYWNrc29u/albums",
-    tracks: "https://apihost.com/artists/TWljaGFlbCBKYWNrc29u/tracks",
-    self: "https://apihost.com/artists/TWljaGFlbCBKYWNrc29u"
-}
-)
+# Artist.create({
+#     id: "TWljaGFlbCBKYWNrc29u",
+#     name: "Michael Jackson",
+#     age: 21,
+#     albums: "https://apihost.com/artists/TWljaGFlbCBKYWNrc29u/albums",
+#     tracks: "https://apihost.com/artists/TWljaGFlbCBKYWNrc29u/tracks",
+#     self: "https://apihost.com/artists/TWljaGFlbCBKYWNrc29u"
+# }
+# )
 
 Album.create(
     {

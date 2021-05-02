@@ -6,6 +6,10 @@ Rails.application.routes.draw do
   get 'artists/:id/albums', to: 'artists#show_albums'
   #get 'artists/:id/tracks', to: 'artists#show_tracks'
 
+  post 'artists', to: 'artists#create'
+
+ 
+
   get 'albums', to: 'albums#index'
   get 'albums/:id', to: 'albums#show'
   get 'albums/:id/tracks', to: 'albums#show_tracks'
