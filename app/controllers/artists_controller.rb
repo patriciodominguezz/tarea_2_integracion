@@ -25,11 +25,11 @@ class ArtistsController < ApplicationController
     }, status: :ok
   end
 
-  def create
-
+  def create 
     @artist_params = params.permit(:name, :age)
-    string = @artist_params["name"]
-    @identificador = Base64.encode64(string).strip
+    string = @artist_params["name"].strip
+    @base = Base64.encode64(string).strip
+    @identificador = @base[0..21]
 
     @albums = "https://tarea-2-taller-integracion.herokuapp.com/artists/" + @identificador + "/albums"
     @tracks = "https://tarea-2-taller-integracion.herokuapp.com/artists/" + @identificador + "/tracks"
@@ -47,5 +47,30 @@ class ArtistsController < ApplicationController
         data: artist
       }, status: :unprocessable_entity
     end
+  end
+
+  def create_album
+    @album_params = params.permit(:id, :name, :genre)
+    string = @album_params["name"].strip
+    @base = Base64.encode64(string + ":" + @album_params["id"]).strip
+    @identificador = @base[0..21]
+
+    @artist = "https://tarea-2-taller-integracion.herokuapp.com/artists/" + @album_params["id"]
+    @tracks = "https://tarea-2-taller-integracion.herokuapp.com/albums/" + @identificador + "/tracks"
+    @self = "https://tarea-2-taller-integracion.herokuapp.com/albums/" + @identificador
+
+    album = Album.new(id: @identificador, artist_id:  @album_params["id"], name: @album_params["name"], genre: @album_params["genre"], artist: @artist, tracks: @tracks, self: @self)
+    if album.save
+      render json:{
+        status: 'Albums CREADO EXITOSAMENTE',
+        data: album
+      }, status: :ok
+    else
+      render json:{
+        status: 'Album No creado',
+        data: album
+      }, status: :unprocessable_entity
+    end
+
   end
 end
