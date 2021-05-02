@@ -6,7 +6,7 @@ class AlbumsController < ApplicationController
 
   def show 
     @identificador = params[:id]
-    album = Album.where(id: @identificador)[0]
+    album = Album.find_by(id: @identificador)
     render json:{
       status: 'Album id',
       data: album
@@ -32,8 +32,8 @@ class AlbumsController < ApplicationController
 
     ######artista_id
 
-    variable = Album.where(id: @track_params["id"])
-    artist_id = variable[0]["artist_id"]
+    variable = Album.find_by(id: @track_params["id"])
+    artist_id = variable["artist_id"]
     @artist = "https://tarea-2-taller-integracion.herokuapp.com/artists/" + artist_id
 
     track = Track.new(id: @identificador, album_id:  @track_params["id"], name: @track_params["name"], 
@@ -50,9 +50,29 @@ class AlbumsController < ApplicationController
         data: track
       }, status: :unprocessable_entity
     end
-   
-
 
 
   end
+
+  def destroy
+    @identificador = params[:id]
+    album = Album.where(id: @identificador)
+    if album.delete_all
+      render json:{
+        status: 'DELETE EXITOSO',
+        data: album
+      }, status: 204
+
+    else
+      render json:{
+        status: 'NO HUBO DELETE',
+        data: album
+      }, status: :unprocessable_entity
+    end
+  
+  end
+  
+  def update
+  end
+
 end

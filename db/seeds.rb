@@ -20,16 +20,44 @@ Album.create(
       }
 )
 
-# Track.create(
-#     {
-#         id: "RG9uJ3QgU3RvcCAnVGlsIF",
-#         album_id: "T2ZmIHRoZSBXYWxsOlRXbG",
-#         name: "Don't Stop 'Til You Get Enough",
-#         duration: 4.1,
-#         times_played: 0,
-#         artist: "https://apihost.com/artists/TWljaGFlbCBKYWNrc29u",
-#         album: "https://apihost.com/albums/T2ZmIHRoZSBXYWxsOlRXbG",
-#         self: "https://apihost.com/tracks/RG9uJ3QgU3RvcCAnVGlsIF"
-#       }
+Track.create(
+    {
+        id: "RG9uJ3QgU3RvcCAnVGlsIF",
+        album_id: "T2ZmIHRoZSBXYWxsOlRXbG",
+        name: "Don't Stop 'Til You Get Enough",
+        duration: 4.1,
+        times_played: 0,
+        artist: "https://tarea-2-taller-integracion.herokuapp.com/artists/TWljaGFlbCBKYWNrc29u",
+        album: "https://tarea-2-taller-integracion.herokuapp.com/albums/T2ZmIHRoZSBXYWxsOlRXbG",
+        self: "https://tarea-2-taller-integracion.herokuapp.com/tracks/RG9uJ3QgU3RvcCAnVGlsIF"
+      }
 
-# )
+)
+
+Track.create(
+    {
+        id: "prueba",
+        album_id: "T2ZmIHRoZSBXYWxsOlRXbG",
+        name: "Don't Stop 'Til You Get Enough",
+        duration: 4.1,
+        times_played: 0,
+        artist: "https://tarea-2-taller-integracion.herokuapp.com/artists/TWljaGFlbCBKYWNrc29u",
+        album: "https://tarea-2-taller-integracion.herokuapp.com/albums/T2ZmIHRoZSBXYWxsOlRXbG",
+        self: "https://tarea-2-taller-integracion.herokuapp.com/tracks/RG9uJ3QgU3RvcCAnVGlsIF"
+      }
+
+)
+
+Track.create(
+    {
+        id: "prueba_uno",
+        album_id: "T2ZmIHRoZSBXYWxsOlRXbG",
+        name: "Don't Stop 'Til You Get Enough",
+        duration: 4.1,
+        times_played: 0,
+        artist: "https://tarea-2-taller-integracion.herokuapp.com/artists/TWljaGFlbCBKYWNrc29u",
+        album: "https://tarea-2-taller-integracion.herokuapp.com/albums/T2ZmIHRoZSBXYWxsOlRXbG",
+        self: "https://tarea-2-taller-integracion.herokuapp.com/tracks/RG9uJ3QgU3RvcCAnVGlsIF"
+      }
+
+)

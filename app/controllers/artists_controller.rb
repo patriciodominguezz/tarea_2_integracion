@@ -9,7 +9,7 @@ class ArtistsController < ApplicationController
 
   def show 
     @identificador = params[:id]
-    artist = Artist.where(id: @identificador)[0]
+    artist = Artist.find_by(id: @identificador)
     render json:{
       status: 'Artist id',
       data: artist
@@ -23,6 +23,20 @@ class ArtistsController < ApplicationController
       status: 'Album',
       data: album
     }, status: :ok
+  end
+
+  def show_tracks
+    @identificador = params[:id]
+    album = Album.where(artist_id: @identificador)
+    tracks = []
+    (0.. album.length()-1).each do |i|
+      variable = Track.where(album_id: album[i]["id"])
+      (0.. variable.length()-1).each do |j|
+        tracks.append(variable[j])
+      end
+    end
+    render json:tracks, status: :ok
+
   end
 
   def create 
@@ -72,5 +86,26 @@ class ArtistsController < ApplicationController
       }, status: :unprocessable_entity
     end
 
+  end
+
+  def destroy
+    @identificador = params[:id]
+    artist = Artist.where(id: @identificador)
+    if artist.delete_all
+      render json:{
+        status: 'DELETE EXITOSO',
+        data: artist
+      }, status: 204
+
+    else
+      render json:{
+        status: 'NO HUBO DELETE',
+        data: artist
+      }, status: :unprocessable_entity
+    end
+  
+  end
+
+  def update
   end
 end
