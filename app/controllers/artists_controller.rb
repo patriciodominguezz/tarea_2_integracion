@@ -107,17 +107,18 @@ class ArtistsController < ApplicationController
   
   end
 
-  # def update
-  #   # @identificador = params[:id]
-  #   # albums = Album.where(artist_id: @identificador)
-  #   # (0.. albums.length()-1).each do |i|
-  #   #   tracks = Track.where(album_id: albums[i]['id'])
-  #   #   (0.. tracks.length()-1).each do |j|
-  #      @track_params = params.permit(:id, :times_played)
-  #       track = Track.find_by(id: "RG9uJ3QgU3RvcCAnVGlsIF") 
-  #       track.update(times_played: @track_params["times_played"])
-  #   #   end
-  #   # end
-  # end
+   def update
+    @identificador = params[:id]
+    albums = Album.where(artist_id: @identificador)
+    (0.. albums.length()-1).each do |i|
+      album_id = albums[i]['id']
+      tracks = Track.where(album_id: album_id)
+      (0.. tracks.length()-1).each do |j|
+        id = tracks[j]["id"]
+        play = tracks[j]["times_played"] + 1
+        Track.where(id: id, album_id: album_id).update_all(times_played: play)
+      end
+    end
+   end
 
 end

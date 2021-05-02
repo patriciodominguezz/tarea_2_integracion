@@ -73,6 +73,13 @@ class AlbumsController < ApplicationController
   end
   
   def update
+    @identificador = params[:id]
+    tracks = Track.where(album_id: @identificador)
+    (0.. tracks.length()-1).each do |i|
+      id = tracks[i]["id"]
+      play = tracks[i]["times_played"] + 1
+      Track.where(id: id, album_id: @identificador).update_all(times_played: play)
+    end
   end
 
 end
