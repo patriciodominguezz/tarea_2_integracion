@@ -33,31 +33,3 @@ Track.create(
       }
 
 )
-
-Track.create(
-    {
-        id: "prueba",
-        album_id: "T2ZmIHRoZSBXYWxsOlRXbG",
-        name: "Don't Stop 'Til You Get Enough",
-        duration: 4.1,
-        times_played: 0,
-        artist: "https://tarea-2-taller-integracion.herokuapp.com/artists/TWljaGFlbCBKYWNrc29u",
-        album: "https://tarea-2-taller-integracion.herokuapp.com/albums/T2ZmIHRoZSBXYWxsOlRXbG",
-        self: "https://tarea-2-taller-integracion.herokuapp.com/tracks/RG9uJ3QgU3RvcCAnVGlsIF"
-      }
-
-)
-
-Track.create(
-    {
-        id: "prueba_uno",
-        album_id: "T2ZmIHRoZSBXYWxsOlRXbG",
-        name: "Don't Stop 'Til You Get Enough",
-        duration: 4.1,
-        times_played: 0,
-        artist: "https://tarea-2-taller-integracion.herokuapp.com/artists/TWljaGFlbCBKYWNrc29u",
-        album: "https://tarea-2-taller-integracion.herokuapp.com/albums/T2ZmIHRoZSBXYWxsOlRXbG",
-        self: "https://tarea-2-taller-integracion.herokuapp.com/tracks/RG9uJ3QgU3RvcCAnVGlsIF"
-      }
-
-)

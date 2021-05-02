@@ -29,7 +29,7 @@ Rails.application.routes.draw do
 
   delete 'tracks/:id', to: 'tracks#destroy'
 
-  put 'tracks/:id/play', to: 'trackss#update'
+  put 'tracks/:id/play', to: 'tracks#update'
 
 
 

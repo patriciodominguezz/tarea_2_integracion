@@ -1,5 +1,6 @@
 class ArtistsController < ApplicationController
 
+
   require "base64"
 
   def index
@@ -106,6 +107,17 @@ class ArtistsController < ApplicationController
   
   end
 
-  def update
-  end
+  # def update
+  #   # @identificador = params[:id]
+  #   # albums = Album.where(artist_id: @identificador)
+  #   # (0.. albums.length()-1).each do |i|
+  #   #   tracks = Track.where(album_id: albums[i]['id'])
+  #   #   (0.. tracks.length()-1).each do |j|
+  #      @track_params = params.permit(:id, :times_played)
+  #       track = Track.find_by(id: "RG9uJ3QgU3RvcCAnVGlsIF") 
+  #       track.update(times_played: @track_params["times_played"])
+  #   #   end
+  #   # end
+  # end
+
 end
