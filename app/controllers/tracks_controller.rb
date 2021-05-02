@@ -33,8 +33,8 @@ class TracksController < ApplicationController
 
   def update
     @identificador = params[:id]
-    track = Track.find_by(id: @identificador)
-    track.update(times_played: 1)
+    Track.where(id: @identificador).update_all(times_played: 1)
+
 
   end
 
