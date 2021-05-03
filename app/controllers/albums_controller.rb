@@ -65,28 +65,28 @@ class AlbumsController < ApplicationController
   def destroy
     @identificador = params[:id]
     album = Album.where(id: @identificador)
-    if album.delete_all
-      render json:{
-        status: 'DELETE EXITOSO',
-        data: album
-      }, status: 204
-
-    else
-      render json:{
-        status: 'NO HUBO DELETE',
-        data: album
-      }, status: :unprocessable_entity
+    if album.empty?
+      head 404
+    else 
+      album.delete_all
+      head 204
     end
   
   end
   
   def update
     @identificador = params[:id]
-    tracks = Track.where(album_id: @identificador)
-    (0.. tracks.length()-1).each do |i|
-      id = tracks[i]["id"]
-      play = tracks[i]["times_played"] + 1
-      Track.where(id: id, album_id: @identificador).update_all(times_played: play)
+    album = Album.find_by(id: @identificador)
+    if album.nil?
+      head 404
+    else
+      tracks = Track.where(album_id: @identificador)
+      (0.. tracks.length()-1).each do |i|
+        id = tracks[i]["id"]
+        play = tracks[i]["times_played"] + 1
+        Track.where(id: id, album_id: @identificador).update_all(times_played: play)
+      end
+      head 200
     end
   end
 
