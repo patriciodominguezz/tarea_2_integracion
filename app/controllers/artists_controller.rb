@@ -137,9 +137,16 @@ class ArtistsController < ApplicationController
     if request.delete?
       @identificador = params[:id]
       artist = Artist.where(id: @identificador)
+      albums = Album.where(artist_id: @identificador)
       if artist.empty?
         head 404
       else 
+        (0.. albums.length()-1).each do |i|
+          album_id = albums[i]['id']
+          tracks = Track.where(album_id: album_id)
+          tracks.delete_all
+        end
+        albums.delete_all
         artist.delete_all
         head 204
       end

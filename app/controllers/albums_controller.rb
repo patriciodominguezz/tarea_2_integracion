@@ -82,9 +82,11 @@ class AlbumsController < ApplicationController
     if request.delete?
       @identificador = params[:id]
       album = Album.where(id: @identificador)
+      track = Track.where(album_id: @identificador)
       if album.empty?
         head 404
-      else 
+      else
+        track.delete_all
         album.delete_all
         head 204
       end
